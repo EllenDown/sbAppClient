@@ -1,0 +1,99 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-family: 'Josefin Slab', serif;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  bottom: 0;
+}
+
+nav {
+  height: 100px;
+  line-height: 100px;
+}
+
+.hero {
+background: url("/assets/IMG_1.jpg") no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+
+}
+
+nav {
+  margin-top: 3rem;
+  background-color: transparent;
+}
+
+img {
+  padding-top: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.brand-logo {
+  background-color: white;
+  border: thick solid black;
+}
+
+.home{
+  background-color: black;
+  opacity: .8;
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.section {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  margin-top: 10%;
+}
+
+form {
+  background-color: white;
+  border-radius: 5%;
+  margin: 2rem;
+  padding: 1rem;
+  opacity: .8;
+  margin-bottom: 1rem;
+}
+[type='text']+label, [type='password']+label {
+  margin-right: 25px;
+  padding-left: 25px;
+  line-height: 30px;
+  font-size: 1rem;
+  color: black;
+  font-weight: bold;
+}
+
+.btn {
+  background-color: black;
+  opacity: .8;
+}
+
+.addDeleteButtons {
+  margin-top: 5rem;
+}
+.inventory {
+  margin-top: 2rem;
+}
+
+.hide {
+  display: none;
+}
