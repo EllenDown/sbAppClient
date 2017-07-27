@@ -31,31 +31,10 @@ $('#signIn').on('click', function(event) {
   $('section#addItem').hide();
   $('section#deleteItem').hide();
   $.get("http://localhost:8080/product")
-      .then(appendInventory);
+      .then(appendInventory)
+      .then(deleteOnClick)
+      .then(updateOnClick)
 });
-
-$('#addItem').on('click', function(event) {
-  event.preventDefault();
-  hideShowNavigation(true);
-  $('nav#navMain').fadeIn(2000);
-  $('nav#navSignIn').hide();
-  $('#inventory').hide();
-  $('section#addItem').fadeIn(2000);
-  $('#inventoryTable').hide();
-  $('section#deleteItem').hide();
-});
-
-$('#deleteItem').on('click', function(event) {
-  event.preventDefault();
-  hideShowNavigation(true);
-  $('nav#navMain').fadeIn(2000);
-  $('nav#navSignIn').hide();
-  $('#inventory').hide();
-  $('section#deleteItem').fadeIn(2000);
-  $('#inventoryTable').hide();
-  $('section#addItem').hide();
-});
-
 
   function appendInventory(data) {
     var inventoryItems = data;
@@ -70,7 +49,64 @@ $('#deleteItem').on('click', function(event) {
 
     for (var i=0; i < inventoryItems.length; i++){
       var inventory = inventoryItems[i];
-
+      const editButton =
+      `<a id="${inventory.id}" class="edit btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
+      const deleteButton = `<a id="${inventory.id}" class="deleteMe btn-floating btn-large waves-effect waves-light black"><i class="material-icons">delete</i></a>`
+      const editForm = `<div id="modal${inventory.id}" class="modal">
+        <div class="modal-content">
+        <form id="${inventory.id}" class="editForm edit${inventory.id}">
+          <select id="itemCategory3" class="edit">
+             <option value="" disabled selected>Select Item Category</option>
+             <option value="mens">Men's Apperal</option>
+             <option value="womens">Women's Apperal</option>
+             <option value="accessories">Accessories</option>
+         </select>
+          <select id="itemNameMens3" class="edit hide">
+           <option value="" disabled selected>Select Item Name</option>
+           <option value="1">Suffer Better Throwback T</option>
+           <option value="2">Power and Light T</option>
+           <option value="3">Suffer Better Totally Casual 3/4 Sleeve T</option>
+           <option value="4">Suffer Better Hoody</option>
+           <option value="5">Suffer Better Cycling Bib</option>
+           <option value="6">Suffer Better Cycling Jersey</option>
+         </select>
+          <select id="itemNameWomens3" class="edit hide">
+          <option value="" disabled selected>Select Item Name</option>
+          <option value="1">Power and Light T</option>
+          <option value="2">Suffer Better Throwback T</option>
+          <option value="3">Suffer Better Semi-Tech T</option>
+          <option value="4">Suffer Better New Look T</option>
+          <option value="5">Suffer Better Tech T</option>
+          <option value="6">Suffer Better High Tech T</option>
+          <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
+          <option value="8">Suffer Better Hoody</option>
+        </select>
+          <select id="itemNameAccessories3" class="edit hide">
+          <option value="" disabled selected>Select Item Name</option>
+          <option value="1">Suffer Better Buffs</option>
+          <option value="2">Suffer Better Water Bottle / Sticker Package</option>
+           <option value="3">Suffer Better Arm Warmers</option>
+           <option value="4">Suffer Better Reversible Beanie</option>
+           <option value="5">Skratch Labs - Exercise Nutrition</option>
+           <option value="6">Power and Light Trucker Hat</option>
+           <option value="7">Throwback Trucker Hat</option>
+           <option value="8">Gift Card</option>
+        </select>
+          <select id="itemSize3" class="edit hide">
+          <option value="" disabled selected>Select Item Size</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+          <option value="xl">XL</option>
+      </select>
+          <div class="input-field col s6 hide">
+            <input id="itemQuantity3" type="text" class="validate" value="quantity3">
+            <label for="quantity">Enter Quantity to Add</label>
+          </div>
+          <button type="submit"> Update </button>
+          </form>
+          </div>
+        </div>`
       $('#inventoryTable').append(
     `<tbody>
       <tr>
@@ -83,8 +119,11 @@ $('#deleteItem').on('click', function(event) {
         <td>${inventory.mediumQuantityAvailable}</td>
         <td>${inventory.largeQuantityAvailable}</td>
         <td>${inventory.xlQuantityAvailable}</td>
+        <td>${editButton}${deleteButton}</td>
       </tr>
-    </tbody>`
+    </tbody>
+    ${editForm}
+    `
   );
 }
 }
@@ -167,7 +206,7 @@ const namePut = $('#itemNameMens3').val();
 const sizePut = $('#itemSize3').val();
 const quantityPut = $('#itemQuantity3').val();
 
-const url = "http://localhost:8080/product"
+const url = "http://localhost:8080/product/"
 
 function createNewAppItem() {
   const categoryPost = $('#itemCategory').val();
@@ -194,6 +233,8 @@ function createNewAppItem() {
   .then(function(data) {
      console.log(data)
   })
+  .then($.get("http://localhost:8080/product")
+      .then(appendInventory));
 }
 
 function createNewAccItem() {
@@ -215,38 +256,47 @@ $.post(url, productPost)
    .then(function(response) {
      getNewItem(url)
    })
+   .then($.get("http://localhost:8080/product")
+       .then(appendInventory))
 })
 }
 
-function getNewItem(url) {
-  $.get(url).then(function(data){
-    data.json()
-.then(displayProduct)
-})
+function updateOnClick() {
+  $('.editForm').click(function(){
+    let productPost = {
+      name: namePost,
+      category: categoryPost,
+      price: pricePost,
+      totalQuantity: totalQuantityPost,
+      smallQuantityAvailable: smallQuantityPost,
+      mediumQuantityAvailable: mediumQuantityPost,
+      largeQuantityAvailable: largeQuantityPost,
+      xlQuantityAvailable: xlQuantityPost
+    }
+    let id = $(this).attr('id');
+    $.ajax({
+     url: url + id,
+     method: 'PUT',
+     data:
+
+   })
+   .then(function(){
+     window.location.reload();
+   });
+ });
 }
 
-function displayProduct(product) {
-  for (var i=0; i < data.length; i++){
-    var newItem = data[i];
 
-    $('#inventoryTable').append(
-  `
-    <tr>
-      <td>${newItem.id}</td>
-      <td>${newItem.name}</td>
-      <td>${newItem.category}</td>
-      <td>${newItem.price}</td>
-      <td>${newItem.totalQuantity}</td>
-      <td>${newItem.smallQuantityAvailable}</td>
-      <td>${newItem.mediumQuantityAvailable}</td>
-      <td>${newItem.largeQuantityAvailable}</td>
-      <td>${newItem.xlQuantityAvailable}</td>
-    </tr>
-  `
-  );
-  }
-}
-
-function sendPutRequest() {
-
-}
+ function deleteOnClick() {
+       $('.deleteMe').click(function(){
+         let id = $(this).attr('id');
+         $.ajax({
+          url: url + id,
+          type: 'DELETE',
+          contentType: 'application/json'
+        })
+        .then(function(){
+          window.location.reload();
+        });
+      });
+    }

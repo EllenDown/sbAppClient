@@ -50,9 +50,9 @@
   </section>
   <section id="inventory">
     <div class="row addDeleteButtons center-align">
-      <div class="col s12 m4 l4">
-        <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal1"><i class="material-icons left">add</i>Add Inventory Item</a>
-        <div id="modal1" class="modal">
+      <div class="col s12 m12 l12">
+        <a class="waves-effect waves-light btn addButton modal-trigger" href="#mod"><i class="material-icons left">add</i>Add Inventory Item</a>
+        <div id="mod" class="modal">
           <div class="modal-content">
             <div class="row">
               <div class="col s12 m6 l6">
@@ -76,7 +76,7 @@
                 <label for="smallQuantity">Enter Small Quantity to Add</label>
               </div><div class="input-field col s8 ">
                 <input id="mediumQuantity" type="number" class="validate">
-                <label for="mediumQuantity">Enter Medium to Add</label>
+                <label for="mediumQuantity">Enter Medium Quantity to Add</label>
               </div><div class="input-field col s8 ">
                 <input id="largeQuantity" type="number" class="validate">
                 <label for="largeQuantity">Enter Large Quantity to Add</label>
@@ -87,14 +87,70 @@
             </div>
           </div>
           <div class="modal-footer">
-            <a id="addInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+            <a id="addInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Create New Item</a>
           </div>
         </div>
       </div>
       <div class="col s12 m4 l4">
-        <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal3"><i class="material-icons left">edit</i>Edit Inventory</a>
-        <div id="modal3" class="modal">
+        <div id="edit-modal" class="modal">
           <div class="modal-content">
+          <form id="edit-form" class="editForm edit">
+            <select id="itemCategory3" class="edit">
+               <option value="" disabled selected>Select Item Category</option>
+               <option value="mens">Men's Apperal</option>
+               <option value="womens">Women's Apperal</option>
+               <option value="accessories">Accessories</option>
+           </select>
+            <select id="itemNameMens3" class="edit">
+             <option value="" disabled selected>Select Item Name</option>
+             <option value="1">Suffer Better Throwback T</option>
+             <option value="2">Power and Light T</option>
+             <option value="3">Suffer Better Totally Casual 3/4 Sleeve T</option>
+             <option value="4">Suffer Better Hoody</option>
+             <option value="5">Suffer Better Cycling Bib</option>
+             <option value="6">Suffer Better Cycling Jersey</option>
+           </select>
+            <select id="itemNameWomens3" class="edit">
+            <option value="" disabled selected>Select Item Name</option>
+            <option value="1">Power and Light T</option>
+            <option value="2">Suffer Better Throwback T</option>
+            <option value="3">Suffer Better Semi-Tech T</option>
+            <option value="4">Suffer Better New Look T</option>
+            <option value="5">Suffer Better Tech T</option>
+            <option value="6">Suffer Better High Tech T</option>
+            <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
+            <option value="8">Suffer Better Hoody</option>
+          </select>
+            <select id="itemNameAccessories3" class="edit">
+            <option value="" disabled selected>Select Item Name</option>
+            <option value="1">Suffer Better Buffs</option>
+            <option value="2">Suffer Better Water Bottle / Sticker Package</option>
+             <option value="3">Suffer Better Arm Warmers</option>
+             <option value="4">Suffer Better Reversible Beanie</option>
+             <option value="5">Skratch Labs - Exercise Nutrition</option>
+             <option value="6">Power and Light Trucker Hat</option>
+             <option value="7">Throwback Trucker Hat</option>
+             <option value="8">Gift Card</option>
+          </select>
+            <select id="itemSize3" class="edit">
+            <option value="" disabled selected>Select Item Size</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="xl">XL</option>
+        </select>
+            <div class="input-field col s6">
+              <input id="itemQuantity3" type="text" class="validate" value="">
+              <label for="quantity">Enter Quantity to Add</label>
+            </div>
+            <button type="submit"> Update </button>
+            </form>
+            </div>
+          </div>
+        </div>
+        <!-- <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal3"><i class="material-icons left">edit</i>Edit Inventory</a> -->
+        <!-- <div id="modal3" class="modal"> -->
+          <!-- <div class="modal-content">
             <select id="itemCategory3" class="edit">
                <option value="" disabled selected>Select Item Category</option>
                <option value="mens">Men's Apperal</option>
@@ -138,18 +194,18 @@
             <option value="medium">Medium</option>
             <option value="large">Large</option>
             <option value="xl">XL</option>
-        </select>
-            <div class="input-field col s6 hide">
-              <input id="itemQuantity3" type="text" class="validate" value="quantity3">
+        </select> -->
+            <!-- <div class="input-field col s6 hide"> -->
+              <!-- <input id="itemQuantity3" type="text" class="validate" value="quantity3">
               <label for="quantity">Enter Quantity to Add</label>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div>
           <div class="modal-footer">
             <a id="addInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit Changes</a>
           </div>
         </div>
       </div>
-      <div class="col s12 m4 l4">
+      <!-- <div class="col s12 m4 l4">
         <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal2"><i class="material-icons right">delete</i>Delete Inventory Item</a>
       </div>
       <div id="modal2" class="modal">
@@ -206,8 +262,8 @@
         <div class="modal-footer">
           <a id="deleteInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
         </div>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     <table id="inventoryTable" class="inventory highlight bordered">
       <thead>
         <tr>
@@ -224,6 +280,7 @@
       </thead>
     </table>
   </section>
+
   <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script type="text/javascript" src="app.js">
