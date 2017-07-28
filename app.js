@@ -9,8 +9,6 @@ $(document).ready(function() {
 });
 
 $('#addInput').click(sendPostReqest)
-$('#editInput').click(sendPutReqest)
-$('#deleteInput').click(sendDeleteReqest)
 
 $('#user_name').on('click', function(event){
   event.preventDefault()
@@ -33,7 +31,7 @@ $('#signIn').on('click', function(event) {
   $.get("http://localhost:8080/product")
       .then(appendInventory)
       .then(deleteOnClick)
-      .then(updateOnClick)
+      // .then(updateOnClick)
 });
 
   function appendInventory(data) {
@@ -50,63 +48,9 @@ $('#signIn').on('click', function(event) {
     for (var i=0; i < inventoryItems.length; i++){
       var inventory = inventoryItems[i];
       const editButton =
-      `<a id="${inventory.id}" class="edit btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
+      `<a data-id="${inventory.id}" data-category="${inventory.category}" class="edit btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
       const deleteButton = `<a id="${inventory.id}" class="deleteMe btn-floating btn-large waves-effect waves-light black"><i class="material-icons">delete</i></a>`
-      const editForm = `<div id="modal${inventory.id}" class="modal">
-        <div class="modal-content">
-        <form id="${inventory.id}" class="editForm edit${inventory.id}">
-          <select id="itemCategory3" class="edit">
-             <option value="" disabled selected>Select Item Category</option>
-             <option value="mens">Men's Apperal</option>
-             <option value="womens">Women's Apperal</option>
-             <option value="accessories">Accessories</option>
-         </select>
-          <select id="itemNameMens3" class="edit hide">
-           <option value="" disabled selected>Select Item Name</option>
-           <option value="1">Suffer Better Throwback T</option>
-           <option value="2">Power and Light T</option>
-           <option value="3">Suffer Better Totally Casual 3/4 Sleeve T</option>
-           <option value="4">Suffer Better Hoody</option>
-           <option value="5">Suffer Better Cycling Bib</option>
-           <option value="6">Suffer Better Cycling Jersey</option>
-         </select>
-          <select id="itemNameWomens3" class="edit hide">
-          <option value="" disabled selected>Select Item Name</option>
-          <option value="1">Power and Light T</option>
-          <option value="2">Suffer Better Throwback T</option>
-          <option value="3">Suffer Better Semi-Tech T</option>
-          <option value="4">Suffer Better New Look T</option>
-          <option value="5">Suffer Better Tech T</option>
-          <option value="6">Suffer Better High Tech T</option>
-          <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
-          <option value="8">Suffer Better Hoody</option>
-        </select>
-          <select id="itemNameAccessories3" class="edit hide">
-          <option value="" disabled selected>Select Item Name</option>
-          <option value="1">Suffer Better Buffs</option>
-          <option value="2">Suffer Better Water Bottle / Sticker Package</option>
-           <option value="3">Suffer Better Arm Warmers</option>
-           <option value="4">Suffer Better Reversible Beanie</option>
-           <option value="5">Skratch Labs - Exercise Nutrition</option>
-           <option value="6">Power and Light Trucker Hat</option>
-           <option value="7">Throwback Trucker Hat</option>
-           <option value="8">Gift Card</option>
-        </select>
-          <select id="itemSize3" class="edit hide">
-          <option value="" disabled selected>Select Item Size</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-          <option value="xl">XL</option>
-      </select>
-          <div class="input-field col s6 hide">
-            <input id="itemQuantity3" type="text" class="validate" value="quantity3">
-            <label for="quantity">Enter Quantity to Add</label>
-          </div>
-          <button type="submit"> Update </button>
-          </form>
-          </div>
-        </div>`
+
       $('#inventoryTable').append(
     `<tbody>
       <tr>
@@ -121,9 +65,7 @@ $('#signIn').on('click', function(event) {
         <td>${inventory.xlQuantityAvailable}</td>
         <td>${editButton}${deleteButton}</td>
       </tr>
-    </tbody>
-    ${editForm}
-    `
+    </tbody>`
   );
 }
 }
@@ -261,31 +203,102 @@ $.post(url, productPost)
 })
 }
 
-function updateOnClick() {
-  $('.editForm').click(function(){
-    let productPost = {
-      name: namePost,
-      category: categoryPost,
-      price: pricePost,
-      totalQuantity: totalQuantityPost,
-      smallQuantityAvailable: smallQuantityPost,
-      mediumQuantityAvailable: mediumQuantityPost,
-      largeQuantityAvailable: largeQuantityPost,
-      xlQuantityAvailable: xlQuantityPost
+function makeUpdate() {
+  $('.edit').click(function(event){
+    event.preventDefault();
+    let category = $(this).attr('data-category')
+    if (category === "mens") {
+      $('#itemNameMens3').parent().removeClass('hide');
+      $('#itemPrice3').parent().removeClass('hide');
+      $('#smallQuantity3').parent().removeClass('hide');
+      $('#mediumQuantity3').parent().removeClass('hide');
+      $('#largeQuantity3').parent().removeClass('hide');
+      $('#xlQuantity3').parent().removeClass('hide');
+      $('#itemQuantity3').parent().removeClass('hide');
     }
-    let id = $(this).attr('id');
-    $.ajax({
-     url: url + id,
-     method: 'PUT',
-     data:
-
-   })
-   .then(function(){
-     window.location.reload();
-   });
- });
+    if (category  === "womens") {
+        $('#itemNameWomens3').parent().removeClass('hide');
+        $('#itemPrice3').parent().removeClass('hide');
+        $('#smallQuantity3').parent().removeClass('hide');
+        $('#mediumQuantity3').parent().removeClass('hide');
+        $('#largeQuantity3').parent().removeClass('hide');
+        $('#xlQuantity3').parent().removeClass('hide');
+    }
+    if (category  === "accessories") {
+        $('#itemNameAccessories3').parent().removeClass('hide');
+        $('#itemPrice3').parent().removeClass('hide');
+        $('#quantity3').parent().removeClass('hide');
+    }
+    let id = $(this).attr('data-id')
+    $.get(url+id, function(data){
+      if (category === "mens") {
+        $('#itemNameMens3').val(data.name);
+        $('#itemPrice3').val(data.price);
+        $('#smallQuantity3').val(data.smallQuantityAvailable);
+        $('#mediumQuantity3').val(data.mediumQuantityAvailable);
+        $('#largeQuantity3').val(data.largeQuantityAvailable);
+        $('#xlQuantity3').val(data.xlQuantityAvailable);
+      } if (category === "womens") {
+        $('#itemNameWomens3').val(data.name);
+        $('#itemPrice3').val(data.price);
+        $('#smallQuantity3').val(data.smallQuantityAvailable);
+        $('#mediumQuantity3').val(data.mediumQuantityAvailable);
+        $('#largeQuantity3').val(data.largeQuantityAvailable);
+        $('#xlQuantity3').val(data.xlQuantityAvailable);
+      } if (category === "accessories") {
+        $('#itemNameAccessories3').val(data.name);
+        $('#itemPrice3').val(data.price);
+        $('#quantity3').val(data.totalQuantity);
+      }
+    })
+    .then(editProduct(id));
+  })
 }
 
+
+function updateOnClick() {
+  $('#updateButton').click(function(event){
+      event.PreventDefault();
+      let edit = {}
+      function getRightData() {
+        if (category === "mens") {
+          return edit = {
+          category: "Men's Apperal",
+          name : $('#itemNameMens3').val(),
+          price: $('#itemPrice3').val(),
+          smallQuantityAvailable : $('#smallQuantity3').val(),
+          mediumQuantityAvailable :$('#mediumQuantity3').val(),
+          largeQuantityAvailable: $('#largeQuantity3').val(),
+          xlQuantityAvailable: $('#xlQuantity3').val()
+        }
+      } if (category === "womens") {
+        return edit = {
+          category: "Women's Apperal",
+          name: $('#itemNameWomens3').val(),
+          price: $('#itemPrice3').val(),
+          smallQuantityAvailable: $('#smallQuantity3').val(),
+          mediumQuantityAvailable: ('#mediumQuantity3').val(),
+          largeQuantityAvailable: $('#largeQuantity3').val(),
+          xlQuantityAvailable: $('#xlQuantity3').val()
+        }
+        } if (category === "accessories") {
+          return edit = {
+          category: "Accessories",
+          name: $('#itemNameAccessories3').val(),
+          price: $('#itemPrice3').val(),
+          totalQuantity: $('#quantity3').val()
+        }
+      }
+    }
+        console.log(edit);
+     $.ajax({
+        url: url + id,
+        method: 'PUT',
+        data: edit
+      })
+     .then(function(){window.location.reload()})
+   })
+ }
 
  function deleteOnClick() {
        $('.deleteMe').click(function(){

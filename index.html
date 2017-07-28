@@ -91,17 +91,10 @@
           </div>
         </div>
       </div>
-      <div class="col s12 m4 l4">
         <div id="edit-modal" class="modal">
           <div class="modal-content">
-          <form id="edit-form" class="editForm edit">
-            <select id="itemCategory3" class="edit">
-               <option value="" disabled selected>Select Item Category</option>
-               <option value="mens">Men's Apperal</option>
-               <option value="womens">Women's Apperal</option>
-               <option value="accessories">Accessories</option>
-           </select>
-            <select id="itemNameMens3" class="edit">
+          <form id="edit-form" class="editForm">
+            <select id="itemNameMens3" class="hide">
              <option value="" disabled selected>Select Item Name</option>
              <option value="1">Suffer Better Throwback T</option>
              <option value="2">Power and Light T</option>
@@ -110,7 +103,7 @@
              <option value="5">Suffer Better Cycling Bib</option>
              <option value="6">Suffer Better Cycling Jersey</option>
            </select>
-            <select id="itemNameWomens3" class="edit">
+            <select id="itemNameWomens3" class="hide">
             <option value="" disabled selected>Select Item Name</option>
             <option value="1">Power and Light T</option>
             <option value="2">Suffer Better Throwback T</option>
@@ -121,7 +114,7 @@
             <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
             <option value="8">Suffer Better Hoody</option>
           </select>
-            <select id="itemNameAccessories3" class="edit">
+            <select id="itemNameAccessories3" class="hide">
             <option value="" disabled selected>Select Item Name</option>
             <option value="1">Suffer Better Buffs</option>
             <option value="2">Suffer Better Water Bottle / Sticker Package</option>
@@ -131,139 +124,35 @@
              <option value="6">Power and Light Trucker Hat</option>
              <option value="7">Throwback Trucker Hat</option>
              <option value="8">Gift Card</option>
-          </select>
-            <select id="itemSize3" class="edit">
-            <option value="" disabled selected>Select Item Size</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-            <option value="xl">XL</option>
-        </select>
-            <div class="input-field col s6">
-              <input id="itemQuantity3" type="text" class="validate" value="">
-              <label for="quantity">Enter Quantity to Add</label>
-            </div>
-            <button type="submit"> Update </button>
+           </select>
+             <div class="input-field col s8 ">
+               <input id="itemPrice3" type="number" class="validate hide">
+               <label for="itemPrice3">Update Price</label>
+             </div>
+             <div class="input-field col s8 ">
+               <input id="smallQuantity3" type="number" class="validate hide">
+               <label for="smallQuantity3">Update Small Quantity</label>
+             </div>
+             <div class="input-field col s8 ">
+               <input id="mediumQuantity3" type="number" class="validate hide">
+               <label for="mediumQuantity3">Update Medium Quantity</label>
+             </div>
+             <div class="input-field col s8 ">
+               <input id="largeQuantity3" type="number" class="validate edit hide">
+               <label for="largeQuantity3">Update Large Quantity</label>
+             </div>
+             <div class="input-field col s8 ">
+               <input id="xlQuantity3" type="number" class="validate hide">
+               <label for="xlQuantity3">Update XL Quantity</label>
+             </div>
+             <div class="input-field col s8 ">
+               <input id="quantity3" type="number" class="validate hide">
+               <label for="quantity3">Update Item Quantity</label>
+             </div>
+            <button id="updateButton" type="submit"> Update </button>
             </form>
             </div>
           </div>
-        </div>
-        <!-- <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal3"><i class="material-icons left">edit</i>Edit Inventory</a> -->
-        <!-- <div id="modal3" class="modal"> -->
-          <!-- <div class="modal-content">
-            <select id="itemCategory3" class="edit">
-               <option value="" disabled selected>Select Item Category</option>
-               <option value="mens">Men's Apperal</option>
-               <option value="womens">Women's Apperal</option>
-               <option value="accessories">Accessories</option>
-           </select>
-            <select id="itemNameMens3" class="edit hide">
-             <option value="" disabled selected>Select Item Name</option>
-             <option value="1">Suffer Better Throwback T</option>
-             <option value="2">Power and Light T</option>
-             <option value="3">Suffer Better Totally Casual 3/4 Sleeve T</option>
-             <option value="4">Suffer Better Hoody</option>
-             <option value="5">Suffer Better Cycling Bib</option>
-             <option value="6">Suffer Better Cycling Jersey</option>
-           </select>
-            <select id="itemNameWomens3" class="edit hide">
-            <option value="" disabled selected>Select Item Name</option>
-            <option value="1">Power and Light T</option>
-            <option value="2">Suffer Better Throwback T</option>
-            <option value="3">Suffer Better Semi-Tech T</option>
-            <option value="4">Suffer Better New Look T</option>
-            <option value="5">Suffer Better Tech T</option>
-            <option value="6">Suffer Better High Tech T</option>
-            <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
-            <option value="8">Suffer Better Hoody</option>
-          </select>
-            <select id="itemNameAccessories3" class="edit hide">
-            <option value="" disabled selected>Select Item Name</option>
-            <option value="1">Suffer Better Buffs</option>
-            <option value="2">Suffer Better Water Bottle / Sticker Package</option>
-             <option value="3">Suffer Better Arm Warmers</option>
-             <option value="4">Suffer Better Reversible Beanie</option>
-             <option value="5">Skratch Labs - Exercise Nutrition</option>
-             <option value="6">Power and Light Trucker Hat</option>
-             <option value="7">Throwback Trucker Hat</option>
-             <option value="8">Gift Card</option>
-          </select>
-            <select id="itemSize3" class="edit hide">
-            <option value="" disabled selected>Select Item Size</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-            <option value="xl">XL</option>
-        </select> -->
-            <!-- <div class="input-field col s6 hide"> -->
-              <!-- <input id="itemQuantity3" type="text" class="validate" value="quantity3">
-              <label for="quantity">Enter Quantity to Add</label>
-            </div> -->
-          <!-- </div>
-          <div class="modal-footer">
-            <a id="addInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit Changes</a>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="col s12 m4 l4">
-        <a class="waves-effect waves-light btn addButton modal-trigger" href="#modal2"><i class="material-icons right">delete</i>Delete Inventory Item</a>
-      </div>
-      <div id="modal2" class="modal">
-        <div class="modal-content">
-          <select id="itemCategory2" class="delete">
-              <option value="" disabled selected>Select Item Category</option>
-             <option value="mens">Men's Apperal</option>
-             <option value="womens">Women's Apperal</option>
-             <option value="accessories">Accessories</option>
-           </select>
-          <select id="itemNameMens2" class="delete hide">
-             <option value="" disabled selected>Select Item Name</option>
-             <option value="1">Suffer Better Throwback T</option>
-             <option value="2">Power and Light T</option>
-             <option value="3">Suffer Better Totally Casual 3/4 Sleeve T</option>
-             <option value="4">Suffer Better Hoody</option>
-             <option value="5">Suffer Better Cycling Bib</option>
-             <option value="6">Suffer Better Cycling Jersey</option>
-           </select>
-          <select id="itemNameWomens2" class="delete hide">
-          <option value="" disabled selected>Select Item Name</option>
-          <option value="1">Power and Light T</option>
-          <option value="2">Suffer Better Throwback T</option>
-          <option value="3">Suffer Better Semi-Tech T</option>
-          <option value="4">Suffer Better New Look T</option>
-          <option value="5">Suffer Better Tech T</option>
-          <option value="6">Suffer Better High Tech T</option>
-          <option value="7">Suffer Better Totally Casual 3/4 Sleeve T</option>
-          <option value="8">Suffer Better Hoody</option>
-        </select>
-          <select id="itemNameAccessories2" class="delete hide">
-          <option value="" disabled selected>Select Item Name</option>
-          <option value="1">Suffer Better Buffs</option>
-          <option value="2">Suffer Better Water Bottle / Sticker Package</option>
-           <option value="3">Suffer Better Arm Warmers</option>
-           <option value="4">Suffer Better Reversible Beanie</option>
-           <option value="5">Skratch Labs - Exercise Nutrition</option>
-           <option value="6">Power and Light Trucker Hat</option>
-           <option value="7">Throwback Trucker Hat</option>
-           <option value="8">Gift Card</option>
-         </select>
-          <select id="itemSize2" class="delete hide">
-          <option value="" disabled selected>Select Item Size</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-          <option value="xl">XL</option>
-         </select>
-          <div class="input-field col s6 hide">
-            <input id="itemQuantity2" type="text" class="validate">
-            <label for="quantity">Enter Quantity to Delete</label>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a id="deleteInput" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
-        </div>
-      </div> -->
-    <!-- </div> -->
     <table id="inventoryTable" class="inventory highlight bordered">
       <thead>
         <tr>
@@ -280,7 +169,6 @@
       </thead>
     </table>
   </section>
-
   <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script type="text/javascript" src="app.js">
