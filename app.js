@@ -48,7 +48,7 @@ $('#signIn').on('click', function(event) {
     for (var i=0; i < inventoryItems.length; i++){
       var inventory = inventoryItems[i];
       const editButton =
-      `<a data-id="${inventory.id}" data-category="${inventory.category}" class="edit btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
+      `<a id="editMe" data-id="${inventory.id}" data-category="${inventory.category}" class="btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
       const deleteButton = `<a id="${inventory.id}" class="deleteMe btn-floating btn-large waves-effect waves-light black"><i class="material-icons">delete</i></a>`
 
       $('#inventoryTable').append(
@@ -124,30 +124,6 @@ function sendPostReqest(event) {
   }
 }
 
-function sendPutReqest(event) {
-  event.preventDefault();
-  if ($('#itemCategory option:selected').val() === "mens" || "womens") {
-    createNewAppItem();
-  } if ($('#itemCategory option:selected').val() === "accessories") {
-    createNewAccItem();
-  }
-}
-
-function sendDeleteReqest(event) {
-  event.preventDefault();
-  console.log("gone gone gone");
-}
-
-const categoryDelete = $('#itemCategory2 option:selected').val();
-const nameDelete = $('#itemName2').val();
-const sizeDelete = $('#itemSize2').val();
-const quantityDelete = $('#itemQuantity2').val();
-
-const categoryPut = $('#itemCategory').val();
-const namePut = $('#itemNameMens3').val();
-const sizePut = $('#itemSize3').val();
-const quantityPut = $('#itemQuantity3').val();
-
 const url = "http://localhost:8080/product/"
 
 function createNewAppItem() {
@@ -202,12 +178,13 @@ $.post(url, productPost)
        .then(appendInventory))
 })
 }
-
-function makeUpdate() {
-  $('.edit').click(function(event){
-    event.preventDefault();
-    let category = $(this).attr('data-category')
-    if (category === "mens") {
+function edit() {
+  $('#editMe').click(function(){
+    console.log("hey")
+    let category = $(this).attr('data-category');
+    let id = $(this).attr('data-id');
+    console.log('data-category')
+    if (category === "Men's Apperal") {
       $('#itemNameMens3').parent().removeClass('hide');
       $('#itemPrice3').parent().removeClass('hide');
       $('#smallQuantity3').parent().removeClass('hide');
@@ -216,7 +193,7 @@ function makeUpdate() {
       $('#xlQuantity3').parent().removeClass('hide');
       $('#itemQuantity3').parent().removeClass('hide');
     }
-    if (category  === "womens") {
+    if (category  === "Women's Apperal") {
         $('#itemNameWomens3').parent().removeClass('hide');
         $('#itemPrice3').parent().removeClass('hide');
         $('#smallQuantity3').parent().removeClass('hide');
@@ -224,12 +201,13 @@ function makeUpdate() {
         $('#largeQuantity3').parent().removeClass('hide');
         $('#xlQuantity3').parent().removeClass('hide');
     }
-    if (category  === "accessories") {
+    if (category  === "Accessories") {
         $('#itemNameAccessories3').parent().removeClass('hide');
         $('#itemPrice3').parent().removeClass('hide');
         $('#quantity3').parent().removeClass('hide');
     }
-    let id = $(this).attr('data-id')
+  })
+}
     $.get(url+id, function(data){
       if (category === "mens") {
         $('#itemNameMens3').val(data.name);
@@ -251,9 +229,8 @@ function makeUpdate() {
         $('#quantity3').val(data.totalQuantity);
       }
     })
-    .then(editProduct(id));
-  })
-}
+    .then(updateOnClick(id))
+  });
 
 
 function updateOnClick() {
@@ -289,7 +266,7 @@ function updateOnClick() {
           totalQuantity: $('#quantity3').val()
         }
       }
-    }
+    } return edit
         console.log(edit);
      $.ajax({
         url: url + id,
