@@ -10,14 +10,6 @@ $(document).ready(function() {
 
 $('#addInput').click(sendPostReqest)
 
-$('#user_name').on('click', function(event){
-  event.preventDefault()
-});
-
-$('#password').on('click', function(event){
-  event.preventDefault()
-});
-
 $('#signIn').on('click', function(event) {
   event.preventDefault();
   $('section#signIn').hide();
@@ -28,7 +20,7 @@ $('#signIn').on('click', function(event) {
   $('#inventory').fadeIn(2000);
   $('section#addItem').hide();
   $('section#deleteItem').hide();
-  $.get("http://localhost:8080/product")
+  $.get("http://localhost:8080/product/")
       .then(appendInventory)
       .then(deleteOnClick)
       // .then(updateOnClick)
@@ -48,7 +40,7 @@ $('#signIn').on('click', function(event) {
     for (var i=0; i < inventoryItems.length; i++){
       var inventory = inventoryItems[i];
       const editButton =
-      `<a id="editMe" data-id="${inventory.id}" data-category="${inventory.category}" class="btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
+      `<a id="${inventory.id}" data-id="${inventory.id}" data-category="${inventory.category}" class="editMe btn-floating btn-large waves-effect modal-trigger waves-light black" href="#edit-modal"><i class="material-icons">edit</i></a>`
       const deleteButton = `<a id="${inventory.id}" class="deleteMe btn-floating btn-large waves-effect waves-light black"><i class="material-icons">delete</i></a>`
 
       $('#inventoryTable').append(
@@ -178,12 +170,11 @@ $.post(url, productPost)
        .then(appendInventory))
 })
 }
-function edit() {
-  $('#editMe').click(function(){
-    console.log("hey")
+// function edit() {
+   $(document).on('click', '.editMe', function(){
+    event.preventDefault();
     let category = $(this).attr('data-category');
     let id = $(this).attr('data-id');
-    console.log('data-category')
     if (category === "Men's Apperal") {
       $('#itemNameMens3').parent().removeClass('hide');
       $('#itemPrice3').parent().removeClass('hide');
@@ -206,39 +197,38 @@ function edit() {
         $('#itemPrice3').parent().removeClass('hide');
         $('#quantity3').parent().removeClass('hide');
     }
-  })
-}
     $.get(url+id, function(data){
-      if (category === "mens") {
+      if (category === "Men's Apperal") {
         $('#itemNameMens3').val(data.name);
         $('#itemPrice3').val(data.price);
         $('#smallQuantity3').val(data.smallQuantityAvailable);
         $('#mediumQuantity3').val(data.mediumQuantityAvailable);
         $('#largeQuantity3').val(data.largeQuantityAvailable);
         $('#xlQuantity3').val(data.xlQuantityAvailable);
-      } if (category === "womens") {
+      } if (category === "Women's Apperal") {
         $('#itemNameWomens3').val(data.name);
         $('#itemPrice3').val(data.price);
         $('#smallQuantity3').val(data.smallQuantityAvailable);
         $('#mediumQuantity3').val(data.mediumQuantityAvailable);
         $('#largeQuantity3').val(data.largeQuantityAvailable);
         $('#xlQuantity3').val(data.xlQuantityAvailable);
-      } if (category === "accessories") {
+      } if (category === "Accessories") {
         $('#itemNameAccessories3').val(data.name);
         $('#itemPrice3').val(data.price);
         $('#quantity3').val(data.totalQuantity);
       }
-    })
+      })
     .then(updateOnClick(id))
-  });
+  })
 
 
-function updateOnClick() {
+function updateOnClick(id) {
   $('#updateButton').click(function(event){
       event.PreventDefault();
+      let category = $(this).attr('data-category');
       let edit = {}
       function getRightData() {
-        if (category === "mens") {
+        if (category === "Men's Apperal") {
           return edit = {
           category: "Men's Apperal",
           name : $('#itemNameMens3').val(),
@@ -248,7 +238,7 @@ function updateOnClick() {
           largeQuantityAvailable: $('#largeQuantity3').val(),
           xlQuantityAvailable: $('#xlQuantity3').val()
         }
-      } if (category === "womens") {
+      } if (category === "Women's Apperal") {
         return edit = {
           category: "Women's Apperal",
           name: $('#itemNameWomens3').val(),
@@ -258,7 +248,7 @@ function updateOnClick() {
           largeQuantityAvailable: $('#largeQuantity3').val(),
           xlQuantityAvailable: $('#xlQuantity3').val()
         }
-        } if (category === "accessories") {
+      } if (category === "Accessories") {
           return edit = {
           category: "Accessories",
           name: $('#itemNameAccessories3').val(),
@@ -266,14 +256,13 @@ function updateOnClick() {
           totalQuantity: $('#quantity3').val()
         }
       }
-    } return edit
-        console.log(edit);
+    }
      $.ajax({
         url: url + id,
         method: 'PUT',
         data: edit
       })
-     .then(function(){window.location.reload()})
+     .then(function(){window.location.reload()});
    })
  }
 
