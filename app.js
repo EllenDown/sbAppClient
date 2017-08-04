@@ -170,7 +170,6 @@ $.post(url, productPost)
        .then(appendInventory))
 })
 }
-// function edit() {
    $(document).on('click', '.editMe', function(){
     event.preventDefault();
     let category = $(this).attr('data-category');
@@ -218,13 +217,12 @@ $.post(url, productPost)
         $('#quantity3').val(data.totalQuantity);
       }
       })
-    .then(updateOnClick(id))
-  })
+    .then(
 
 
-function updateOnClick(id) {
-  $('#updateButton').click(function(event){
+  $(document).on('click', '#updateButton', function(){
       event.PreventDefault();
+      console.log('hey')
       let category = $(this).attr('data-category');
       let edit = {}
       function getRightData() {
@@ -256,15 +254,16 @@ function updateOnClick(id) {
           totalQuantity: $('#quantity3').val()
         }
       }
-    }
+    } console.log(edit);
      $.ajax({
         url: url + id,
         method: 'PUT',
         data: edit
       })
      .then(function(){window.location.reload()});
-   })
- }
+   }))
+ });
+
 
  function deleteOnClick() {
        $('.deleteMe').click(function(){
